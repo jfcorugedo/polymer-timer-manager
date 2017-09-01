@@ -1,0 +1,86 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="timer-adder">
+    <template>
+        <style>
+            :host {
+
+            }
+
+            input {
+
+            }
+
+            .timer-adder form {
+                display: flex;
+            }
+
+            .timer-adder form > * {
+                margin-left: 1rem;
+            }
+
+            .timer-adder form > *:first-child {
+                margin-left: 0;
+            }
+
+            .timer-adder input {
+                flex: 2 1 0;
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+
+            .timer-adder button {
+                flex: 1 1 0;
+                padding: 2rem;
+                font-size: 1rem;
+                color: white;
+                background-color: #3498db;
+                border-style: none;
+                font-weight: bold;
+            }
+
+            .timer-adder button:disabled {
+                background-color: #95a5a6;
+            }
+        </style>
+
+        <div className="timer-adder">
+            <form>
+                <iron-input allowed-pattern="[0-9]">
+                    <input>
+                </iron-input>
+                <iron-input allowed-pattern="[0-9]">
+                    <input>
+                </iron-input>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `timer-adder`
+         * It creates new events
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class TimerAdder extends Polymer.Element {
+            static get is() {
+                return 'timer-adder';
+            }
+
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'timer-adder'
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(TimerAdder.is, TimerAdder);
+    </script>
+</dom-module>

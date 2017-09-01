@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../timer-adder/timer-adder.html">
+
+<dom-module id="timers-manager-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <timer-adder prop1="Juan"></timer-adder>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class TimersManagerApp extends Polymer.Element {
+      static get is() { return 'timers-manager-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'timers-manager-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TimersManagerApp.is, TimersManagerApp);
+  </script>
+</dom-module>

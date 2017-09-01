@@ -1,0 +1,7 @@
+{
+  "name": "timers-manager",
+  "short_name": "timers-manager",
+  "description": "Simple application to schedule and manage events",
+  "start_url": "/",
+  "display": "standalone"
+}
