@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+
+<dom-module id="timer-list">
+
+    <template>
+
+        <style>
+            div {
+                color: white;
+            }
+        </style>
+
+        <template is="dom-repeat" items="{{timers}}">
+            <div># [[index]]</div>
+            <div>Timer name: <span>[[item.timerName]]</span></div>
+            <div>Timer time: <span>[[item.timerTime]]</span></div>
+        </template>
+
+    </template>
+
+    <script>
+        class TimerList extends Polymer.Element {
+
+            static get is() { return 'timer-list'; }
+
+            static get properties() {
+                return {
+                    timers: {
+                        type: Array
+                    }
+                }
+            }
+
+        }
+
+        window.customElements.define(TimerList.is, TimerList);
+    </script>
+</dom-module>
