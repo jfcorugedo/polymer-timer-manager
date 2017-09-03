@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="timer-adder">
     <template>
@@ -7,29 +9,31 @@
 
             }
 
-            input {
-
-            }
-
             .timer-adder form {
                 display: flex;
+                flex-wrap: wrap;
             }
 
             .timer-adder form > * {
-                margin-left: 1rem;
+                margin: 1rem;
             }
 
-            .timer-adder form > *:first-child {
+            .timer-adder form iron-input:first-child {
                 margin-left: 0;
             }
 
-            .timer-adder input {
+            .timer-adder iron-input {
                 flex: 2 1 0;
-                padding: 1rem;
-                font-size: 1.2rem;
+                display: flex;
             }
 
-            .timer-adder button {
+            input {
+                flex: 1 1 0;
+                font-size: 1.2rem;
+                padding: 2rem;
+            }
+
+            .timer-adder paper-button {
                 flex: 1 1 0;
                 padding: 2rem;
                 font-size: 1rem;
@@ -39,20 +43,21 @@
                 font-weight: bold;
             }
 
-            .timer-adder button:disabled {
+            .timer-adder paper-button:disabled {
                 background-color: #95a5a6;
             }
         </style>
 
-        <div className="timer-adder">
+        <div class="timer-adder">
             <form>
-                <iron-input allowed-pattern="[0-9]">
-                    <input>
+                <iron-input bind-value="{{timerName}}">>
+                    <input value="{{value1::input}}" placeholder="Enter a timer name">>
                 </iron-input>
-                <iron-input allowed-pattern="[0-9]">
-                    <input>
+                <iron-input allowed-pattern="[0-9]" bind-value="{{timerTime}}">
+                    <input type="number" value="{{value2::input}}" placeholder="Enter a valid timer time in seconds">
                 </iron-input>
-                <button type="submit">Create</button>
+                <paper-button on-tap="addTimer" raised class="custom indigo">Create</paper-button>
+                <!--button type="submit">Create</button-->
             </form>
         </div>
     </template>
@@ -73,11 +78,19 @@
 
             static get properties() {
                 return {
-                    prop1: {
-                        type: String,
-                        value: 'timer-adder'
+                    timerTime: {
+                        type: Number
+                    },
+                    timerName: {
+                        type: String
                     }
                 };
+            }
+
+            addTimer() {
+                let {timerName, timerTime} = this;
+                console.log(`${timerName} ${timerTime}`);
+                this.dispatchEvent(new CustomEvent('add-timer', {timerName, timerTime}));
             }
         }
 
