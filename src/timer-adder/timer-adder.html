@@ -90,7 +90,7 @@
             addTimer() {
                 let {timerName, timerTime} = this;
                 console.log(`${timerName} ${timerTime}`);
-                this.dispatchEvent(new CustomEvent('add-timer', {timerName, timerTime}));
+                this.dispatchEvent(new CustomEvent('timer-added', {detail: {timerName, timerTime}, bubbles: true, composed: true}));
             }
         }
 
