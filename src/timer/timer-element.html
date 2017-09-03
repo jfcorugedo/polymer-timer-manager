@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="timer-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `timer-element`
+     * A timer element that represents an important event that is going to take place in a specified numer of seconds
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TimerElement extends Polymer.Element {
+      static get is() { return 'timer-element'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'timer-element'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TimerElement.is, TimerElement);
+  </script>
+</dom-module>

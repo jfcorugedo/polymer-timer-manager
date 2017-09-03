@@ -7,23 +7,38 @@
     <template>
 
         <style>
-            div {
-                color: white;
+            .timer-list {
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 1rem;
+            }
+
+            .timer-list > * {
+                margin: 1rem 1rem 0 0;
+            }
+
+            .timer-list > *:first-child {
+                margin-left: 0;
             }
         </style>
 
-        <template is="dom-repeat" items="{{timers}}">
-            <div># [[index]]</div>
-            <div>Timer name: <span>[[item.timerName]]</span></div>
-            <div>Timer time: <span>[[item.timerTime]]</span></div>
-        </template>
-
+        <div class="timer-list">
+            <template is="dom-repeat" items="{{timers}}">
+                <div class="timer">
+                    <div># [[index]]</div>
+                    <div>Timer name: <span>[[item.timerName]]</span></div>
+                    <div>Timer time: <span>[[item.timerTime]]</span></div>
+                </div>
+            </template>
+        </div>
     </template>
 
     <script>
         class TimerList extends Polymer.Element {
 
-            static get is() { return 'timer-list'; }
+            static get is() {
+                return 'timer-list';
+            }
 
             static get properties() {
                 return {
