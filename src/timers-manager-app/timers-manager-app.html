@@ -31,7 +31,7 @@
           super.ready();
 
           //Defer non critical work until first paint has been done!
-          Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('timer-added', (event) => console.log('Create new timer!!',event)));
+          Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('new-timer-requested', (event) => console.log('Create new timer!!',event)));
       }
     }
 
