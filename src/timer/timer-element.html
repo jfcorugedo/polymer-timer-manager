@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../numeral/numeral-js.html">
 
 
@@ -10,6 +12,14 @@
                 padding: 1rem;
                 color: white;
                 font-family: 'Roboto', sans-serif;
+            }
+
+            paper-button {
+                font-size: 1rem;
+                text-transform: none;
+                margin: 0;
+                padding: 0;
+                display: inline;
             }
 
             .finished {
@@ -39,8 +49,17 @@
             <h2 class="name">[[ name ]]</h2>
             <div class="time">[[ formattedTime ]]</div>
             <div class="actions">
-                <div on-tap="alert('hi')">delete</div>
-                <div on-tap="alert('bye')">pause</div>
+                <div class="action">
+                    <paper-button on-tap="delete">delete</paper-button>
+                </div>
+                <div class="action">
+                    <template is="dom-if" if="{{running}}">
+                        <paper-button on-tap="pause">pause</paper-button>
+                    </template>
+                    <template is="dom-if" if="{{!running}}">
+                        <paper-button on-tap="resume">resume</paper-button>
+                    </template>
+                </div>
             </div>
         </div>
 
@@ -79,6 +98,43 @@
 
             formatTime(time) {
                 return numeral(time).format('00:00:00');
+            }
+
+            connectedCallback() {
+                this.next();
+            }
+
+            next() {
+                this.timer = setTimeout(() => this.tick(), 1000);
+                this.running = true;
+            }
+
+            tick() {
+                this.time--;
+                if (this.time > 0 && this.running) {
+                    this.next();
+                }
+            }
+
+            disconnectedCallback() {
+                this.clearTimer();
+            }
+
+            clearTimer() {
+                clearTimeout(this.timer);
+            }
+
+            pause() {
+                this.clearTimer();
+                this.running = false;
+            }
+
+            resume() {
+                this.next();
+            }
+
+            delete() {
+                alert('not yet implemented!!');
             }
         }
 
