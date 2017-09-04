@@ -15,7 +15,7 @@
             }
 
             .timer-adder form > * {
-                margin: 1rem;
+                margin: 1rem 2rem 1rem 0;
             }
 
             .timer-adder form iron-input:first-child {
@@ -50,8 +50,8 @@
 
         <div class="timer-adder">
             <form>
-                <iron-input bind-value="{{timerName}}">>
-                    <input value="{{value1::input}}" placeholder="Enter a timer name">>
+                <iron-input bind-value="{{timerName}}">
+                    <input value="{{value1::input}}" placeholder="Enter a timer name">
                 </iron-input>
                 <iron-input allowed-pattern="[0-9]" bind-value="{{timerTime}}">
                     <input type="number" value="{{value2::input}}" placeholder="Enter a valid timer time in seconds">
