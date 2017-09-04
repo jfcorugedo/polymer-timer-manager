@@ -4,45 +4,50 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
 
 <dom-module id="timers-manager-app">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-      * {
-        font-family: 'Roboto', sans-serif;
-      }
-    </style>
-    <timer-adder id="timerAdder"></timer-adder>
-    <timer-list id="timerList" timers="{{timers}}"></timer-list>
-  </template>
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-  <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class TimersManagerApp extends Polymer.Element {
-      static get is() { return 'timers-manager-app'; }
-      static get properties() {
-        return {
-          timers: {
-            type: Array,
-              value() {
-                  return [{timerName: 'default timer', timerTime: -1}, {timerName: 'default timer 2', timerTime: -2}];
-              }
-          }
-        };
-      }
+            * {
+                font-family: 'Roboto', sans-serif;
+            }
+        </style>
+        <timer-adder id="timerAdder"></timer-adder>
+        <timer-list id="timerList" timers="{{timers}}"></timer-list>
+    </template>
 
-      ready() {
-          super.ready();
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class TimersManagerApp extends Polymer.Element {
+            static get is() {
+                return 'timers-manager-app';
+            }
 
-          //Defer non critical work until first paint has been done!
-          Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('new-timer-requested', (event) => this.push('timers', {timerName: event.detail.timerName, timerTime: event.detail.timerTime})));
-      }
-    }
+            static get properties() {
+                return {
+                    timers: {
+                        type: Array,
+                        value: []
+                    }
+                };
+            }
 
-    window.customElements.define(TimersManagerApp.is, TimersManagerApp);
-  </script>
+            ready() {
+                super.ready();
+
+                //Defer non critical work until first paint has been done!
+                Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('new-timer-requested', (event) => this.push('timers', {
+                    timerName: event.detail.timerName,
+                    timerTime: event.detail.timerTime
+                })));
+            }
+        }
+
+        window.customElements.define(TimersManagerApp.is, TimersManagerApp);
+    </script>
 </dom-module>
