@@ -1,36 +1,87 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../numeral/numeral-js.html">
+
 
 <dom-module id="timer-element">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
+    <template>
+        <style>
+            :host {
+                background: #2ecc71;
+                padding: 1rem;
+                color: white;
+                font-family: 'Roboto', sans-serif;
+            }
 
-  <script>
-    /**
-     * `timer-element`
-     * A timer element that represents an important event that is going to take place in a specified numer of seconds
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class TimerElement extends Polymer.Element {
-      static get is() { return 'timer-element'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'timer-element'
-          }
-        };
-      }
-    }
+            .finished {
+                background: #e74c3c;
+            }
 
-    window.customElements.define(TimerElement.is, TimerElement);
-  </script>
+            .timer .name {
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .timer .time {
+                font-size: 5rem;
+            }
+
+            .timer .actions {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .timer .actions > div {
+                cursor: pointer;
+            }
+        </style>
+
+        <div class="timer">
+            <h2 class="name">[[ name ]]</h2>
+            <div class="time">[[ formattedTime ]]</div>
+            <div class="actions">
+                <div on-tap="alert('hi')">delete</div>
+                <div on-tap="alert('bye')">pause</div>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `timer-element`
+         * A timer element that represents an important event that is going to take place in a specified numer of seconds
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class TimerElement extends Polymer.Element {
+            static get is() {
+                return 'timer-element';
+            }
+
+            static get properties() {
+                return {
+                    name: {
+                        type: String,
+                        value: 'unknown'
+                    },
+                    time: {
+                        type: Number,
+                        value: 0
+                    },
+                    formattedTime: {
+                        type: String,
+                        computed: 'formatTime(time)'
+                    }
+                };
+            }
+
+            formatTime(time) {
+                return numeral(time).format('00:00:00');
+            }
+        }
+
+        window.customElements.define(TimerElement.is, TimerElement);
+    </script>
 </dom-module>

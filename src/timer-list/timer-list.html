@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../timer/timer-element.html">
 
 
 <dom-module id="timer-list">
@@ -24,11 +25,7 @@
 
         <div class="timer-list">
             <template is="dom-repeat" items="{{timers}}">
-                <div class="timer">
-                    <div># [[index]]</div>
-                    <div>Timer name: <span>[[item.timerName]]</span></div>
-                    <div>Timer time: <span>[[item.timerTime]]</span></div>
-                </div>
+                <timer-element name="[[item.timerName]]" time="[[item.timerTime]]"></timer-element>
             </template>
         </div>
     </template>
