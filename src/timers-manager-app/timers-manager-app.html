@@ -15,7 +15,7 @@
             }
         </style>
         <timer-adder id="timerAdder"></timer-adder>
-        <timer-list id="timerList" timers="{{timers}}"></timer-list>
+        <timer-list id="timerList" on-delete-timer="delete" timers="{{timers}}"></timer-list>
     </template>
 
     <script>
@@ -41,10 +41,49 @@
                 super.ready();
 
                 //Defer non critical work until first paint has been done!
-                Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('new-timer-requested', (event) => this.push('timers', {
-                    timerName: event.detail.timerName,
-                    timerTime: event.detail.timerTime
-                })));
+                Polymer.RenderStatus.afterNextRender(this, () => this.$.timerAdder.addEventListener('new-timer-requested', (event) =>
+                    this.push('timers', {
+                        name: event.detail.timerName,
+                        time: event.detail.timerTime,
+                        finished: false,
+                        running: true
+                    })
+                ));
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                this.next();
+            }
+
+            next() {
+                this.timer = setTimeout(() => this.updateTimers(this.timers), 1000);
+            }
+
+            updateTimers(timers) {
+                timers.forEach((timer, index) => this.tick(timer, index));
+
+                this.next();
+            }
+
+            tick(timer, index) {
+                if (!timer.finished && timer.running && timer.time > 0) {
+                    this.set(`timers.${index}.time`, timer.time - 1);
+                }
+
+                if(timer.time === 0) {
+                    this.set(`timers.${index}.finished`, true);
+                }
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                clearTimeout(this.timer);
+            }
+
+            delete(event) {
+                const index = event.detail.index;
+                this.timers = [...this.timers.slice(0, index), ...this.timers.slice(index + 1, this.timers.length)];
             }
         }
 

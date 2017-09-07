@@ -25,7 +25,7 @@
 
         <div class="timer-list">
             <template is="dom-repeat" items="{{timers}}">
-                <timer-element name="[[item.timerName]]" time="[[item.timerTime]]"></timer-element>
+                <timer-element on-delete-timer="delete" name="[[item.name]]" time="{{item.time}}" finished="{{item.finished}}" running="{{item.running}}"></timer-element>
             </template>
         </div>
     </template>
@@ -40,9 +40,16 @@
             static get properties() {
                 return {
                     timers: {
-                        type: Array
+                        type: Array,
+                        notify: true
                     }
                 }
+            }
+
+            delete(event) {
+                const {name, time} = event.detail;
+                event.stopPropagation();
+                this.dispatchEvent(new CustomEvent('delete-timer', {detail: {name, time, index: event.model.index}, bubbles: true, composed: true}));
             }
 
         }

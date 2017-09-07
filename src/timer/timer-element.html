@@ -91,7 +91,8 @@
                     },
                     time: {
                         type: Number,
-                        value: 0
+                        value: 0,
+                        notify: true
                     },
                     formattedTime: {
                         type: String,
@@ -105,7 +106,8 @@
                     running: {
                         type: Boolean,
                         value: false,
-                        reflectToAttribute: true
+                        reflectToAttribute: true,
+                        notify: true
                     }
                 };
             }
@@ -118,45 +120,16 @@
                 return numeral(time).format('00:00:00');
             }
 
-            connectedCallback() {
-                this.next();
-            }
-
-            next() {
-                this.timer = setTimeout(() => this.tick(), 1000);
-                this.running = true;
-            }
-
-            tick() {
-                this.time--;
-
-                if (this.time > 0 && this.running) {
-                    this.next();
-                } else if(this.time === 0) {
-                    this.finished = true;
-                }
-            }
-
-            disconnectedCallback() {
-                this.clearTimer();
-            }
-
-            clearTimer() {
-                clearTimeout(this.timer);
-            }
-
             pause() {
-                this.clearTimer();
                 this.running = false;
             }
 
             resume() {
-                this.next();
+                this.running = true;
             }
 
-            delete(event) {
-                console.log('event', event);
-                console.log('model', model);
+            delete() {
+                this.dispatchEvent(new CustomEvent('delete-timer', {detail: {name: this.name, time: this.time}, bubbles: true, composed: true}));
             }
         }
 
