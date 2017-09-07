@@ -14,16 +14,16 @@
                 font-family: 'Roboto', sans-serif;
             }
 
+            :host([finished]) {
+                background: #e74c3c;
+            }
+
             paper-button {
                 font-size: 1rem;
                 text-transform: none;
                 margin: 0;
                 padding: 0;
                 display: inline;
-            }
-
-            .finished {
-                background: #e74c3c;
             }
 
             .timer .name {
@@ -92,6 +92,11 @@
                     formattedTime: {
                         type: String,
                         computed: 'formatTime(time)'
+                    },
+                    finished: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 };
             }
@@ -111,8 +116,11 @@
 
             tick() {
                 this.time--;
+
                 if (this.time > 0 && this.running) {
                     this.next();
+                } else if(this.time === 0) {
+                    this.finished = true;
                 }
             }
 
