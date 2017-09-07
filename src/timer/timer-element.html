@@ -18,6 +18,10 @@
                 background: #e74c3c;
             }
 
+            :host(:not([running])) {
+                background: #C4B731;
+            }
+
             paper-button {
                 font-size: 1rem;
                 text-transform: none;
@@ -53,7 +57,7 @@
                     <paper-button on-tap="delete">delete</paper-button>
                 </div>
                 <div class="action">
-                    <template is="dom-if" if="{{running}}">
+                    <template is="dom-if" if="{{isPausable(running, finished)}}">
                         <paper-button on-tap="pause">pause</paper-button>
                     </template>
                     <template is="dom-if" if="{{!running}}">
@@ -97,8 +101,17 @@
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    running: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 };
+            }
+
+            isPausable(running, finished) {
+                return running && !finished;
             }
 
             formatTime(time) {
@@ -141,8 +154,9 @@
                 this.next();
             }
 
-            delete() {
-                alert('not yet implemented!!');
+            delete(event) {
+                console.log('event', event);
+                console.log('model', model);
             }
         }
 
