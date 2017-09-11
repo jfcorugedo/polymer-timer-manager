@@ -14,7 +14,6 @@
                 font-family: 'Roboto', sans-serif;
             }
         </style>
-        <h2>Hello {{prop1}}!</h2>
         <timer-adder id="timerAdder"></timer-adder>
         <timer-list id="timerList" on-delete-timer="delete" on-timer-paused="pause" on-timer-resumed="resume" timers="[[timers]]"></timer-list>
     </template>
@@ -34,10 +33,6 @@
                     timers: {
                         type: Array,
                         value: []
-                    },
-                    prop1: {
-                        type: String,
-                        value: 'timers-manager-app'
                     }
                 };
             }
