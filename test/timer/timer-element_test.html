@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>timer-element test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/timer/timer-element.html">
+</head>
+<body>
+
+<test-fixture id="RunningTimerTestFixture">
+    <template>
+        <timer-element running name="myTimer"></timer-element>
+    </template>
+</test-fixture>
+
+<test-fixture id="PausedTimerTestFixture">
+    <template>
+        <timer-element name="myTimer"></timer-element>
+    </template>
+</test-fixture>
+
+<test-fixture id="NamedTimerTestFixture">
+    <template>
+        <timer-element name="myTimer"></timer-element>
+    </template>
+</test-fixture>
+
+<test-fixture id="TimeFormattedTestFixture">
+    <template>
+        <timer-element time="125"></timer-element>
+    </template>
+</test-fixture>
+
+<script>
+    suite('timer-element', function () {
+
+        test('time value (in seconds) provided will be formatted using the pattern 0:00:00', function () {
+            const element = fixture('TimeFormattedTestFixture');
+            assert.equal(element.time, 125);
+            const elementShadowRoot = element.shadowRoot;
+            const elementTime = elementShadowRoot.querySelector('.time');
+            assert.equal(elementTime.innerHTML, '0:02:05');
+        });
+
+        test('when the timer is running then the pause button is displayed and resume button is hidden', function (done) {
+            const element = fixture('RunningTimerTestFixture');
+            flush(() => {
+                const elementShadowRoot = element.shadowRoot;
+                const elementPauseButton = elementShadowRoot.querySelector('#pause');
+                expect(elementPauseButton).to.be.visible;
+                const elementResumeButton = elementShadowRoot.querySelector('#resume');
+                expect(elementResumeButton).to.be.null;
+                done();
+            });
+        });
+
+        test('when the timer is paused then the pause button is hidden and resume button is displayed', function (done) {
+            const element = fixture('PausedTimerTestFixture');
+            flush(() => {
+                const elementShadowRoot = element.shadowRoot;
+                const elementResumeButton = elementShadowRoot.querySelector('#resume');
+                expect(elementResumeButton).to.be.visible;
+                const elementPauseButton = elementShadowRoot.querySelector('#pause');
+                expect(elementPauseButton).to.be.null;
+                done();
+            });
+        });
+
+        test('when delete button is pressed then delete-timer event is thrown', function (done) {
+            const element = fixture('NamedTimerTestFixture');
+            element.addEventListener('delete-timer', event => {
+                expect(event.detail.name = 'myTimer')
+                done();
+            });
+
+            const elementShadowRoot = element.shadowRoot;
+            const elementDeleteButton = elementShadowRoot.querySelector('#delete');
+            elementDeleteButton.click();
+        });
+
+        test('when pause button is pressed then timer-paused event is thrown', function (done) {
+            const element = fixture('RunningTimerTestFixture');
+            element.addEventListener('timer-paused', event => {
+                expect(event.detail.name = 'myTimer')
+                done();
+            });
+
+            flush(() => {
+                const elementShadowRoot = element.shadowRoot;
+                const elementPauseButton = elementShadowRoot.querySelector('#pause');
+                elementPauseButton.click();
+            });
+        });
+
+        test('when resume button is pressed then timer-resumed event is thrown', function (done) {
+            const element = fixture('PausedTimerTestFixture');
+            element.addEventListener('timer-resumed', event => {
+                expect(event.detail.name = 'myTimer')
+                done();
+            });
+
+            flush(() => {
+                const elementShadowRoot = element.shadowRoot;
+                const elementPauseButton = elementShadowRoot.querySelector('#resume');
+                elementPauseButton.click();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

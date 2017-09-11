@@ -54,14 +54,14 @@
             <div class="time">[[ formattedTime ]]</div>
             <div class="actions">
                 <div class="action">
-                    <paper-button on-tap="delete">delete</paper-button>
+                    <paper-button id="delete" on-tap="delete">delete</paper-button>
                 </div>
                 <div class="action">
                     <template is="dom-if" if="{{isPausable(running, finished)}}">
-                        <paper-button on-tap="pause">pause</paper-button>
+                        <paper-button id="pause" on-tap="pause">pause</paper-button>
                     </template>
                     <template is="dom-if" if="{{!running}}">
-                        <paper-button on-tap="resume">resume</paper-button>
+                        <paper-button id="resume" on-tap="resume">resume</paper-button>
                     </template>
                 </div>
             </div>
@@ -106,8 +106,7 @@
                     running: {
                         type: Boolean,
                         value: false,
-                        reflectToAttribute: true,
-                        notify: true
+                        reflectToAttribute: true
                     }
                 };
             }
