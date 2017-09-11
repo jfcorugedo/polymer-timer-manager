@@ -50,14 +50,13 @@
 
         <div class="timer-adder">
             <form>
-                <iron-input bind-value="{{timerName}}">
-                    <input value="{{value1::input}}" placeholder="Enter a timer name">
+                <iron-input   bind-value="{{timerName}}">
+                    <input id="name" value="{{value1::input}}" placeholder="Enter a timer name">
                 </iron-input>
                 <iron-input allowed-pattern="[0-9]" bind-value="{{timerTime}}">
-                    <input type="number" value="{{value2::input}}" placeholder="Enter a valid timer time in seconds">
+                    <input id="time" type="number" value="{{value2::input}}" placeholder="Enter a valid timer time in seconds">
                 </iron-input>
-                <paper-button on-tap="addTimer" raised class="custom indigo">Create</paper-button>
-                <!--button type="submit">Create</button-->
+                <paper-button id="create" on-tap="addTimer" raised class="custom indigo">Create</paper-button>
             </form>
         </div>
     </template>

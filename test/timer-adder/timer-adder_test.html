@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>timer-adder test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/timer-adder/timer-adder.html">
+</head>
+<body>
+
+<test-fixture id="BasicTestFixture">
+    <template>
+        <timer-adder></timer-adder>
+    </template>
+</test-fixture>
+
+<script>
+
+    function fireNativeInputEvent(input) {
+        var ev = new Event('input', { bubbles: true, cancelable: true, composed: true });
+        input.dispatchEvent(ev);
+    }
+
+    suite('timer-adder', function () {
+
+        test('when create button is pressed then new-timer-requested event is thrown', function (done) {
+            const element = fixture('BasicTestFixture');
+            element.addEventListener('new-timer-requested', event => {
+                done();
+            });
+            const elementShadowRoot = element.shadowRoot;
+            const elementCreateButton = elementShadowRoot.querySelector('#create');
+            elementCreateButton.click();
+        });
+
+        test('when create button is pressed then new-timer-requested event is thrown with name and time values obtained from input elements', function (done) {
+            const element = fixture('BasicTestFixture');
+
+            // Mutation observer is async, so wait one tick.
+            Polymer.Base.async(function() {
+                element.addEventListener('new-timer-requested', event => {
+                    expect(event.detail.timerName).to.equal('myTimer');
+                    expect(event.detail.timerTime).to.equal('65');
+                    done();
+                });
+
+                const elementShadowRoot = element.shadowRoot;
+                const nameInput = elementShadowRoot.querySelector('#name');
+                nameInput.value = 'myTimer';
+                fireNativeInputEvent(nameInput);
+
+                const timeInput = elementShadowRoot.querySelector('#time');
+                timeInput.value = '65';
+                fireNativeInputEvent(timeInput);
+
+                const elementCreateButton = elementShadowRoot.querySelector('#create');
+                elementCreateButton.click();
+            }, 1);
+        });
+
+    });
+</script>
+
+</body>
+</html>
