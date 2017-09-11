@@ -4,6 +4,11 @@ Simple application to schedule and manage events
 
 [![Screenshot](./screenshots/screenshot.png)](https://summerschool-polymer-timers.firebaseapp.com/)
 
+
+Access the application [here](https://summerschool-polymer-timers.firebaseapp.com/)
+
+Or clone the repo and follow these steps to build it:
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
