@@ -2,7 +2,7 @@
 
 Simple application to schedule and manage events
 
-![Screenshot](./screenshots/screenshot.png)
+![Screenshot (./screenshots/screenshot.png)](https://summerschool-polymer-timers.firebaseapp.com/)
 
 ## Install the Polymer-CLI
 
