@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>timer-list test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/timer-list/timer-list.html">
+</head>
+<body>
+
+<test-fixture id="BasicTestFixture">
+    <template>
+        <timer-list></timer-list>
+    </template>
+</test-fixture>
+
+<script>
+    suite('timer-list', function () {
+
+        test('renders one timer element for every entry in timers array', function (done) {
+            var timerList = fixture('BasicTestFixture');
+            timerList.timers = [{name: 'myTimer1'}, {name: 'myTimer2'}];
+
+            flush(() => {
+                const timers = timerList.shadowRoot.querySelectorAll('timer-element');
+                expect(timers).to.have.lengthOf(2);
+
+                done();
+
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

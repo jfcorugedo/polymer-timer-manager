@@ -63,6 +63,10 @@
                 event.stopPropagation();
                 this.dispatchEvent(new CustomEvent('timer-resumed', {detail: {name, time, index: event.model.index}, bubbles: true, composed: true}));
             }
+
+            test(timers) {
+                this.timers = timers;
+            }
         }
 
         window.customElements.define(TimerList.is, TimerList);
