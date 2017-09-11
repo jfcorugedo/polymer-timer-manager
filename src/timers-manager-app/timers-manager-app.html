@@ -15,7 +15,7 @@
             }
         </style>
         <timer-adder id="timerAdder"></timer-adder>
-        <timer-list id="timerList" on-delete-timer="delete" timers="{{timers}}"></timer-list>
+        <timer-list id="timerList" on-delete-timer="delete" on-timer-paused="pause" on-timer-resumed="resume" timers="[[timers]]"></timer-list>
     </template>
 
     <script>
@@ -84,6 +84,16 @@
             delete(event) {
                 const index = event.detail.index;
                 this.timers = [...this.timers.slice(0, index), ...this.timers.slice(index + 1, this.timers.length)];
+            }
+
+            pause(event) {
+                const index = event.detail.index;
+                this.set(`timers.${index}.running`, false);
+            }
+
+            resume(event) {
+                const index = event.detail.index;
+                this.set(`timers.${index}.running`, true);
             }
         }
 

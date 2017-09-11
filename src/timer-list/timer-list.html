@@ -24,8 +24,8 @@
         </style>
 
         <div class="timer-list">
-            <template is="dom-repeat" items="{{timers}}">
-                <timer-element on-delete-timer="delete" name="[[item.name]]" time="{{item.time}}" finished="{{item.finished}}" running="{{item.running}}"></timer-element>
+            <template is="dom-repeat" items="[[timers]]">
+                <timer-element on-delete-timer="delete" on-timer-paused="pause" on-timer-resumed="resume" name="[[item.name]]" time="[[item.time]]" finished="[[item.finished]]" running="[[item.running]]"></timer-element>
             </template>
         </div>
     </template>
@@ -52,6 +52,17 @@
                 this.dispatchEvent(new CustomEvent('delete-timer', {detail: {name, time, index: event.model.index}, bubbles: true, composed: true}));
             }
 
+            pause(event) {
+                const {name, time} = event.detail;
+                event.stopPropagation();
+                this.dispatchEvent(new CustomEvent('timer-paused', {detail: {name, time, index: event.model.index}, bubbles: true, composed: true}));
+            }
+
+            resume(event) {
+                const {name, time} = event.detail;
+                event.stopPropagation();
+                this.dispatchEvent(new CustomEvent('timer-resumed', {detail: {name, time, index: event.model.index}, bubbles: true, composed: true}));
+            }
         }
 
         window.customElements.define(TimerList.is, TimerList);

@@ -121,11 +121,11 @@
             }
 
             pause() {
-                this.running = false;
+                this.dispatchEvent(new CustomEvent('timer-paused', {detail: {name: this.name, time: this.time}, bubbles: true, composed: true}));
             }
 
             resume() {
-                this.running = true;
+                this.dispatchEvent(new CustomEvent('timer-resumed', {detail: {name: this.name, time: this.time}, bubbles: true, composed: true}));
             }
 
             delete() {
