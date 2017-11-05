@@ -75,7 +75,7 @@
         test('when delete button is pressed then delete-timer event is thrown', function (done) {
             const element = fixture('NamedTimerTestFixture');
             element.addEventListener('delete-timer', event => {
-                expect(event.detail.name = 'myTimer')
+                expect(event.detail.name).to.equal('myTimer');
                 done();
             });
 
@@ -87,7 +87,7 @@
         test('when pause button is pressed then timer-paused event is thrown', function (done) {
             const element = fixture('RunningTimerTestFixture');
             element.addEventListener('timer-paused', event => {
-                expect(event.detail.name = 'myTimer')
+                expect(event.detail.name).to.equal('myTimer');
                 done();
             });
 
@@ -101,7 +101,7 @@
         test('when resume button is pressed then timer-resumed event is thrown', function (done) {
             const element = fixture('PausedTimerTestFixture');
             element.addEventListener('timer-resumed', event => {
-                expect(event.detail.name = 'myTimer')
+                expect(event.detail.name).to.equal('myTimer');
                 done();
             });
 
